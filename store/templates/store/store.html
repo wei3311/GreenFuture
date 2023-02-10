@@ -1,0 +1,58 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+
+<h1 class="text-center">ECO-STORE</h1>
+<a href="{% url 'cart' %}"><button class="btn btn-outline-success ms-lg-2"><i class='bx bxs-cart px-2'></i>SHOPPING
+        CART</button></a>
+
+<div class="container-fluid mt-4">
+    <form class="d-flex" action="{% url 'productSearch' %}" method="GET">
+        {% csrf_token %}
+        <input class="form-control me-2" type="search" name="q" placeholder="Search Product Keywords">
+
+        <button type="submit" class="btn btn-outline-success">Search</button>
+    </form>
+</div>
+
+<!--Product Card-->
+<div class="container py-4">
+
+    <div class="row g-5">
+        {% for product in products %}
+        <div class="col-lg-4 col-sm-6 mx-auto">
+            <div class="card">
+                <div class="product-1 align-items-center p-2 text-center">
+                    <img src="{{product.imageURL}}" alt="" class="rounded" width='160'>
+                    <h5 class="pt-2">{{product.name}}</h5>
+                    <!--Card info-->
+                    <div class="mt-3 info">
+                        <span class='d-block'><b>{{product.desc}}</b></span>
+
+                    </div>
+                    <div class="cost mt-3 text-dark">
+                        <span><b>RM {{product.price|floatformat:2}}</b></span>
+                        <div class="star mt-3 align-items-center">
+                            <i class='bx bxs-star text-warning'></i>
+                            <i class='bx bxs-star text-warning'></i>
+                            <i class='bx bxs-star text-warning'></i>
+                            <i class='bx bxs-star text-warning'></i>
+                            <i class='bx bxs-star text-warning'></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!--ADD TO CART Button-->
+                <button data-product={{product.id}} data-action="add"
+                    class="update-cart btn btn-outline-success mx-5 my-4">
+                    <span><b>ADD TO CART</b></span>
+                </button>
+
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock content %}

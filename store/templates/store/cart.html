@@ -1,0 +1,61 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+
+<!--Shopping Cart-->
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col">
+            <h2>Shopping Cart</h2>
+            <div class="col align-self-center text-right text-dark">{{order.get_cart_items}} item(s)</div>
+        </div>
+    </div>
+
+    {% for item in items %}
+    <hr>
+    <div class="row">
+        <div class="row align-items-center">
+            <div class="col-lg-4 col-sm-6 py-3 text-center"><img src="{{item.product.imageURL}}" alt="" class="rounded"
+                    width='160'></div>
+
+            <div class="col px-5">
+                <div class="row text-dark">{{item.product.name}}</div>
+                <div class="row">{{item.product.desc}}</div>
+            </div>
+            <div class="col">
+                <a href="#" data-product={{item.product.id}} data-action="remove" class="update-cart">-</a>
+                <a href="#" class="border mx-3 px-3">{{item.quantity}}</a>
+                <a href="#" data-product={{item.product.id}} data-action="add" class="update-cart">+</a> 
+            </div>
+            <div class="col">RM {{item.get_total|floatformat:2}} 
+                <span data-product={{item.product.id}} data-action="delete" class="close update-cart px-xl-4">
+                    <button class="btn btn-success px-2">Delete <i class='bx bx-trash'></i></a></button>
+                </span>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="row mt-5">
+        <div class="col"><b>Total:</b> RM {{order.get_cart_total}}</div>
+    </div>
+
+
+    <div class="col">
+        <a href="{% url 'store' %}">
+            <button class="btn btn-success my-4">
+                <i class='bx bx-arrow-back'></i>
+                <span>BACK TO STORE</span>
+            </button>
+        </a>
+        <a href="{% url 'checkout' %}">
+            <button class="btn btn-warning my-4 bx-pull-right">
+                <span>CHECK OUT</span>
+                <i class='bx bx-right-arrow-alt'></i>
+            </button>
+        </a>
+    </div>
+</div>
+
+{% endblock content %}
